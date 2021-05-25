@@ -44,10 +44,29 @@ class ArrayProblemsLeetcodeTest {
     }
 
     @Test
-    void nestingTest() {
+    void nestingTest1() {
         int [] input = new int[] {5,4,0,3,1,6,2};
         ArrayProblemsLeetcode a = new ArrayProblemsLeetcode();
         int ans = a.arrayNesting(input);
         System.out.println(ans);
     }
+
+    @Test
+    void nestingTest2() {
+        int [] input = new int[] {0,2,1};
+        ArrayProblemsLeetcode a = new ArrayProblemsLeetcode();
+        int ans = a.arrayNesting(input);
+        System.out.println(ans);
+    }
+
+    @Test
+    void nestingTest3() {
+        int [] input = new int[] {2,4,3,0,1};
+        ArrayProblemsLeetcode a = new ArrayProblemsLeetcode();
+        int ans = a.arrayNesting(input);
+        System.out.println(ans);
+    }
+
+
+
 }

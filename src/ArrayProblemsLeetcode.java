@@ -24,9 +24,8 @@ public class ArrayProblemsLeetcode {
         return true;
     }
 
-
     // degree of an array - #697
-    // key: keep track of the first occurence of element as well
+    // key: keep track of the first occurrence of element as well
     public int findShortestSubArray(int[] nums) {
 
         Map<Integer, Integer> countStore = new HashMap<>();
@@ -61,7 +60,7 @@ public class ArrayProblemsLeetcode {
         return result;
     }
 
-    // arrayPartitionI . to solve
+    // arrayPartitionI to solve
     public int arrayPairSum(int[] nums) {
 
         //[6,2,6,5,1,2]
@@ -75,45 +74,59 @@ public class ArrayProblemsLeetcode {
         return ans;
     }
 
+    // LC: #565. Array Nesting
+    public int arrayNesting(int[] nums) {
+
+        int maxLen = 0;
+        Set <Integer> valuesExplored = new HashSet<>();     // to keep track of visited values
+
+        Set <Integer> allValues = new HashSet<>();          // to track which values have not been visited
+        for (int i = 0; i < nums.length; i++) {
+            allValues.add(i);
+        }
+
+        int currentValueIndex;
+        int currentValue;
+        int count = 0;
+
+        while(allValues.size() != 0){
+            currentValueIndex = allValues.iterator().next();  // fetch next unexplored value in hashset
+            allValues.remove(currentValueIndex);
+            currentValue = nums[currentValueIndex];
+            maxLen = Integer.max( maxLen, dfs(nums, currentValue, valuesExplored,allValues));
+        }
+
+        return maxLen;
+    }
+
+        public int dfs(int [] nums, int currVertex, Set<Integer> valuesExplored, Set<Integer> allValues){
+
+            if (valuesExplored.contains(currVertex)) return 0;
+
+            valuesExplored.add(currVertex);
+            allValues.remove(currVertex);
+
+            int currentVal = nums[currVertex];              // next value
+            int ans = dfs(nums, currentVal, valuesExplored, allValues);
+
+            return ans+1;
+        }
 }
 
+// start with brute force
+//        /for (int i = 0; i < nums.length; i++) {
+//
+//            Set<Integer> valuesVisited = new HashSet<>();
+//            int start = i;
+//            valuesVisited.add(nums[start]);
+//            int next = nums[nums[start]];
+//
+//            while (!valuesVisited.contains(next)){
+//                valuesVisited.add(next);
+//                next = nums[next];
+//            }
+//
+//            if (valuesVisited.size() > maxLen) maxLen = valuesVisited.size();
+//        }
 
-//     public int findShortestSubArray(int[] nums) {
-//        int maxElement = maxFrequencyElementCount(nums);
-//        int left_count = 0, right_count = nums.length-1;
-//
-//        while (left_count != right_count){
-//            if(nums[left_count] != maxElement){
-//                left_count++;
-//            }
-//
-//            if(nums[right_count] != maxElement){
-//                right_count--;
-//            }
-//
-//            if(nums[right_count] == maxElement && nums[left_count]== maxElement)
-//                break;
-//        }
-//        return right_count-left_count+1;
-//    }
-//
-//    public int maxFrequencyElementCount (int [] nums){
-//        Map<Integer, Integer> countStore = new HashMap<>();
-//        int maxFrequency = 1;
-//        int maxFrequencyElement = nums[0];
-//
-//        for (int num: nums) {
-//            if(countStore.containsKey(num)){
-//                int new_count = countStore.get(num) + 1;
-//                if(new_count > maxFrequency){
-//                    maxFrequency = new_count;
-//                    maxFrequencyElement = num;
-//                }
-//                countStore.put(num, new_count);
-//
-//            } else{
-//                countStore.put(num, 1);
-//            }
-//        }
-//        return maxFrequencyElement;
-//    }
+
